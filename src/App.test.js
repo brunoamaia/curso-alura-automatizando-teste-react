@@ -27,7 +27,7 @@ describe('Componente principal', () => {
 					transacao: 'saque',
 					valor: 50
 				}
-				const novoSaldo = calcularNovoSaldo(valores , 150);
+				const novoSaldo = calcularNovoSaldo(valores , 150)
 
 				expect(novoSaldo).toBe(100)
 			})
@@ -36,7 +36,7 @@ describe('Componente principal', () => {
 					transacao: 'saque',
 					valor: 100
 				}
-				const novoSaldo = calcularNovoSaldo(valores , 50);
+				const novoSaldo = calcularNovoSaldo(valores , 50)
 
 				expect(novoSaldo).toBe(-50)
 			})
@@ -47,7 +47,7 @@ describe('Componente principal', () => {
 				transacao: 'deposito',
 				valor: 50
 			}
-			const novoSaldo = calcularNovoSaldo(valores , 100);
+			const novoSaldo = calcularNovoSaldo(valores , 100)
 
 			expect(novoSaldo).toBe(150)
 		})
