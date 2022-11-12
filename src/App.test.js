@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import App, { calcularNovoSaldo } from './App'
 
 describe('Componente principal', () => {
@@ -21,8 +21,8 @@ describe('Componente principal', () => {
 	})
 
 	describe('Quando eu realizo uma transação', () => {
-		describe('que é um saque, o valor vai', () => {
-			it('diminuir', () => {
+		describe('que é um saque', () => {
+			it('o valor vai diminuir', () => {
 				const valores = {
 					transacao: 'saque',
 					valor: 50
@@ -31,7 +31,7 @@ describe('Componente principal', () => {
 
 				expect(novoSaldo).toBe(100)
 			})
-			it('ficar negativo', () => {
+			it('o valor vai ficar negativo', () => {
 				const valores = {
 					transacao: 'saque',
 					valor: 100
@@ -39,6 +39,22 @@ describe('Componente principal', () => {
 				const novoSaldo = calcularNovoSaldo(valores , 50)
 
 				expect(novoSaldo).toBe(-50)
+			})
+			it('a operação vai acontecer', async () => {
+				await render(<App />)
+				
+				const saldo = screen.getByText('R$ 1000')
+				const transacao = screen.getByLabelText('Saque')
+				const valor = screen.getByTestId('valor')
+				const botaoTransacao = screen.getByText('Realizar operação')
+
+				expect(saldo.textContent).toBe('R$ 1000')
+
+				await fireEvent.click(transacao, {target: {value: 'saque'}})
+				await fireEvent.change(valor, {target: {value: '10'}})
+				await fireEvent.click(botaoTransacao)
+
+				expect(saldo.textContent).toBe('R$ 990')
 			})
 		})
 
